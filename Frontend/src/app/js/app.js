@@ -1,0 +1,1 @@
+var groupApp = angular.module('groupApp', ['ngMaterial', 'ngMessages', 'ngRoute', 'ngAnimate']);

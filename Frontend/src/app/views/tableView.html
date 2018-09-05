@@ -1,0 +1,67 @@
+<div class="col s10" layout-padding ng-cloak>
+    <md-content>
+        <md-input-container class="md-block">
+            <md-icon md-svg-src="styles/img/search_black.svg"></md-icon>
+            <input ng-model="q" type="text" placeholder="Filter (optional)">
+        </md-input-container>
+    </md-content>
+    <table class="striped bordered">
+        <thead>
+            <tr>
+                <th ng-click="orderUsers('name')">Name</th>
+                <th ng-click="orderUsers('job')">Job</th>
+                <th ng-click="orderUsers('age')">Age</th>
+                <th ng-click="orderUsers('grade')">Grade</th>
+                <th>
+                    <md-icon md-svg-src="styles/img/build_black.svg"></md-icon>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat-start="user in users | orderBy: selectedParameter">
+                <td>{{user.name}}</td>
+                <td>{{user.job}}</td>
+                <td>{{user.age}}</td>
+                <td>{{user.grade}}</td>
+                <td class="center-align">
+                    <md-button class="md-fab md-primary" aria-label="Add User" ng-click="AddUserToSelectedGroup(user)" ng-disabled="groupIsSelectedAndUserIsMember(user)">
+                        <md-icon md-svg-src="styles/img/person_add_white.svg"></md-icon>
+                    </md-button>
+                    <md-button class="md-fab whiteButton" aria-label="Show feedback" ng-click="showFeedback = !showFeedback">
+                        <md-icon md-svg-src="styles/img/arrow_down.svg" ng-if="!showFeedback"></md-icon>
+                        <md-icon md-svg-src="styles/img/arrow_up_white.svg" ng-if="showFeedback"></md-icon>
+                    </md-button>
+                    <td>
+            </tr>
+            <tr ng-repeat-end ng-hide="!showFeedback" class="feedBackContent">
+                <td>
+                    {{user.feedback === "" ? 'This user has no feedback yet' : user.feedback}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="input-field col s2 center-align">
+            <md-button class="md-fab orange waves-light btn-floating" ng-disabled="pager.currentPage == 1" ng-click="SetPage(1)" aria-label="Navigate To First Page">
+                <md-icon md-svg-src="styles/img/first_page_white.svg" ng-if="!showFeedback"></md-icon>
+            </md-button>
+            <md-button class="md-fab orange waves-light btn-floating" ng-disabled="pager.currentPage == 1" ng-click="SetPage(pager.currentPage - 1)" aria-label="Navigate Left">
+                <md-icon md-svg-src="styles/img/chevron_left_white.svg" ng-if="!showFeedback"></md-icon>
+            </md-button>
+        </div>
+        <div class="input-field col s8 center-align">
+            <md-button class="md-fab waves-light btn-floating" ng-repeat="page in pager.pages" ng-click="SetPage(page)" ng-class="{{page}} == pager.currentPage ? 'orange' : 'red'">
+                {{page}}
+            </md-button>
+        </div>
+        <div class="input-field col s2 center-align">
+            <md-button class="md-fab orange waves-light btn-floating" ng-disabled="pager.currentPage >= pager.totalPages" ng-click="SetPage(pager.currentPage + 1)" aria-label="Navigate Right">
+                <md-icon md-svg-src="styles/img/chevron_right_white.svg" ng-if="!showFeedback"></md-icon>
+            </md-button>
+            <md-button class="md-fab orange waves-light btn-floating" ng-disabled="pager.currentPage >= pager.totalPages" ng-click="SetPage(pager.totalPages)" aria-label="Navigate To Last Page">
+                <md-icon md-svg-src="styles/img/last_page_white.svg" ng-if="!showFeedback"></md-icon>
+            </md-button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<div layout="column" ng-cloak>
+    <md-content class="md-padding">
+        <form ng-submit="$event.preventDefault()" name="searchForm">
+            <div layout-gt-sm="row">
+                <md-autocomplete flex="20" required md-input-name="autocompleteField" md-selected-item-change="ctrl.selectedItemChange(item)" md-input-minlength="2" md-input-maxlength="18" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text="ctrl.searchText"
+                    md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.name" md-require-match md-floating-label="Select user">
+                    <md-item-template>
+                        <span class="item-title">
+                            <md-icon md-svg-icon="styles/img/person_black.svg"></md-icon>
+                                        <span> {{item.name}} </span>
+                        </span>
+                    </md-item-template>
+                    <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
+                        <div ng-message="required">You <b>must</b> select a user.</div>
+                        <div ng-message="md-require-match">Please select an existing user.</div>
+                        <div ng-message="minlength">Your entry is not long enough.</div>
+                        <div ng-message="maxlength">Your entry is too long.</div>
+                    </div>
+                </md-autocomplete>
+                <md-input-container>
+                    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                        <md-button class="md-raised" md-no-ink="true" ng-repeat="selectedUser in ctrl.selectedUsers">
+                            {{selectedUser.name}}
+                            <md-icon md-svg-src="styles/img/close_2.svg" ng-click="ctrl.removeUserFromSelected(selectedUser)"></md-icon>
+                        </md-button>
+                    </section>
+                </md-input-container>
+
+                <md-input-container flex="10">
+                    <md-button class="md-raised md-primary" aria-label="Sync" ng-click="ctrl.synchronizeSelectedUsers()">
+                        <md-icon md-svg-src="styles/img/swap_horiz.svg"></md-icon>
+                    </md-button>
+                </md-input-container>
+            </div>
+        </form>
+    </md-content>
+</div>
